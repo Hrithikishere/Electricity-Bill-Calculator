@@ -94,63 +94,67 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 10),
-                    TextField(
-                      focusNode: unitFocusNode,
-                      autofocus: true,
-                      controller: _unitsController,
-                      keyboardType: TextInputType.number,
-                      decoration:
-                          const InputDecoration(hintText: 'Total Units'),
-                      onSubmitted: (main) => setState(() {
-                        // 0 - 75
-                        // 75 - 200
-                        // 200 - 300
-                        // 300 - 400
-                        // 400 - 600
-                        int value = int.parse(main.isEmpty ? '0' : main);
-                        if (value <= 75) {
-                          _rangeOneController.text = '$value';
-                          _rangeTwoController.text = '00';
-                          _rangeThreeController.text = '00';
-                          _rangeFourController.text = '00';
-                          _rangeFiveController.text = '00';
-                        } else if (value > 75 && value <= 200) {
-                          _rangeOneController.text = '75';
-                          _rangeTwoController.text = '${value - 75}';
-                          _rangeThreeController.text = '00';
-                          _rangeFourController.text = '00';
-                          _rangeFiveController.text = '00';
-                        } else if (value > 200 && value <= 300) {
-                          _rangeOneController.text = '75';
-                          _rangeTwoController.text = '125';
-                          _rangeThreeController.text = '${value - 200}';
-                          _rangeFourController.text = '00';
-                          _rangeFiveController.text = '00';
-                        } else if (value > 300 && value <= 400) {
-                          _rangeOneController.text = '75';
-                          _rangeTwoController.text = '125';
-                          _rangeThreeController.text = '100';
-                          _rangeFourController.text = '${value - 300}';
-                          _rangeFiveController.text = '00';
-                        } else if (value > 400 && value <= 600) {
-                          _rangeOneController.text = '75';
-                          _rangeTwoController.text = '125';
-                          _rangeThreeController.text = '100';
-                          _rangeFourController.text = '100';
-                          _rangeFiveController.text = '${value - 400}';
-                        } else {
-                          _rangeOneController.text = '75';
-                          _rangeTwoController.text = '125';
-                          _rangeThreeController.text = '100';
-                          _rangeFourController.text = '100';
-                          _rangeFiveController.text = '200';
-                          _rangeSixController.text = '${value - 600}';
-                        }
-                        rateOneFocusNode.requestFocus();
-                      }),
-                      style: const TextStyle(fontSize: 14),
+                    SizedBox(
+                      width: size * 0.95,
+                      child: TextField(
+                        focusNode: unitFocusNode,
+                        autofocus: true,
+                        controller: _unitsController,
+                        keyboardType: TextInputType.number,
+                        decoration:
+                            const InputDecoration(hintText: 'Total Units'),
+                        onChanged: (main) => setState(() {
+                          // 0 - 75
+                          // 75 - 200
+                          // 200 - 300
+                          // 300 - 400
+                          // 400 - 600
+                          int value = int.parse(main.isEmpty ? '0' : main);
+                          if (value <= 75) {
+                            _rangeOneController.text = '$value';
+                            _rangeTwoController.text = '00';
+                            _rangeThreeController.text = '00';
+                            _rangeFourController.text = '00';
+                            _rangeFiveController.text = '00';
+                          } else if (value > 75 && value <= 200) {
+                            _rangeOneController.text = '75';
+                            _rangeTwoController.text = '${value - 75}';
+                            _rangeThreeController.text = '00';
+                            _rangeFourController.text = '00';
+                            _rangeFiveController.text = '00';
+                          } else if (value > 200 && value <= 300) {
+                            _rangeOneController.text = '75';
+                            _rangeTwoController.text = '125';
+                            _rangeThreeController.text = '${value - 200}';
+                            _rangeFourController.text = '00';
+                            _rangeFiveController.text = '00';
+                          } else if (value > 300 && value <= 400) {
+                            _rangeOneController.text = '75';
+                            _rangeTwoController.text = '125';
+                            _rangeThreeController.text = '100';
+                            _rangeFourController.text = '${value - 300}';
+                            _rangeFiveController.text = '00';
+                          } else if (value > 400 && value <= 600) {
+                            _rangeOneController.text = '75';
+                            _rangeTwoController.text = '125';
+                            _rangeThreeController.text = '100';
+                            _rangeFourController.text = '100';
+                            _rangeFiveController.text = '${value - 400}';
+                          } else {
+                            _rangeOneController.text = '75';
+                            _rangeTwoController.text = '125';
+                            _rangeThreeController.text = '100';
+                            _rangeFourController.text = '100';
+                            _rangeFiveController.text = '200';
+                            _rangeSixController.text = '${value - 600}';
+                          }
+                          // rateOneFocusNode.requestFocus();
+                        }),
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     ),
                     const SizedBox(height: 20),
+                    //rate per unit
                     const Text(
                       'Range per Rate',
                       textAlign: TextAlign.left,
@@ -160,460 +164,508 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 10),
                     // per unit cost
                     // for 0 - 75
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //range
-                        SizedBox(
-                          width: 60,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: '00'),
-                            controller: _rangeOneController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: size * 0.95),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //range
+                          SizedBox(
+                            width: 60,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration: const InputDecoration(hintText: '00'),
+                              controller: _rangeOneController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('X'),
-                        const SizedBox(height: 20),
-                        // rate
-                        SizedBox(
-                          width: 80,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: 'Rate'),
-                            controller: _rateOneController,
-                            keyboardType: TextInputType.number,
-                            onSubmitted: (value) {
-                              double cost =
-                                  double.parse(value.isEmpty ? '0' : value) *
-                                      double.parse(
-                                          _rangeOneController.text.isEmpty
-                                              ? '0'
-                                              : _rangeOneController.text);
-                              setState(() {
-                                _costOneController.text = cost.toString();
-                                // print(_costOneController.text);
-                              });
-                              rateTwoFocusNode.requestFocus();
-                            },
-                            focusNode: rateOneFocusNode,
+                          const Spacer(flex: 1),
+                          const Text('X'),
+                          const Spacer(flex: 1),
+                          // rate
+                          SizedBox(
+                            width: 80,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  const InputDecoration(hintText: 'Rate'),
+                              controller: _rateOneController,
+                              keyboardType: TextInputType.number,
+                              onSubmitted: (value) {
+                                double cost =
+                                    double.parse(value.isEmpty ? '0' : value) *
+                                        double.parse(
+                                            _rangeOneController.text.isEmpty
+                                                ? '0'
+                                                : _rangeOneController.text);
+                                setState(() {
+                                  _costOneController.text = cost.toString();
+                                  // print(_costOneController.text);
+                                });
+                                rateTwoFocusNode.requestFocus();
+                              },
+                              focusNode: rateOneFocusNode,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('='),
-                        const SizedBox(height: 20),
-                        // cost
-                        SizedBox(
-                          width: 150,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: 'Cost'),
-                            controller: _costOneController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                          const Spacer(flex: 1),
+                          const Text('='),
+                          const Spacer(flex: 1),
+                          // cost
+                          SizedBox(
+                            width: 150,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  const InputDecoration(hintText: 'Cost'),
+                              controller: _costOneController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10),
-
                     // for 75 - 200 -> 125
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //range
-                        SizedBox(
-                          width: 60,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: '00'),
-                            controller: _rangeTwoController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: size * 0.95),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //range
+                          SizedBox(
+                            width: 60,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration: const InputDecoration(hintText: '00'),
+                              controller: _rangeTwoController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('X'),
-                        const SizedBox(height: 20),
-                        // rate
-                        SizedBox(
-                          width: 80,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            focusNode: rateTwoFocusNode,
-                            decoration: const InputDecoration(hintText: 'Rate'),
-                            controller: _rateTwoController,
-                            keyboardType: TextInputType.number,
-                            onSubmitted: (value) {
-                              double cost =
-                                  double.parse(value.isEmpty ? '0' : value) *
-                                      double.parse(
-                                          _rangeTwoController.text.isEmpty
-                                              ? '0'
-                                              : _rangeTwoController.text);
-                              setState(() {
-                                _costTwoController.text = cost.toString();
-                              });
-                              rateThreeFocusNode.requestFocus();
-                            },
+                          const Spacer(flex: 1),
+
+                          const Text('X'),
+                          const Spacer(flex: 1),
+
+                          // rate
+                          SizedBox(
+                            width: 80,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              focusNode: rateTwoFocusNode,
+                              decoration:
+                                  const InputDecoration(hintText: 'Rate'),
+                              controller: _rateTwoController,
+                              keyboardType: TextInputType.number,
+                              onSubmitted: (value) {
+                                double cost =
+                                    double.parse(value.isEmpty ? '0' : value) *
+                                        double.parse(
+                                            _rangeTwoController.text.isEmpty
+                                                ? '0'
+                                                : _rangeTwoController.text);
+                                setState(() {
+                                  _costTwoController.text = cost.toString();
+                                });
+                                rateThreeFocusNode.requestFocus();
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('='),
-                        const SizedBox(height: 20),
-                        // cost
-                        SizedBox(
-                          width: 150,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: 'Cost'),
-                            controller: _costTwoController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                          const Spacer(flex: 1),
+
+                          const Text('='),
+                          const Spacer(flex: 1),
+
+                          // cost
+                          SizedBox(
+                            width: 150,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  const InputDecoration(hintText: 'Cost'),
+                              controller: _costTwoController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10),
-
                     // for 200 - 300 -> 100
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //range
-                        SizedBox(
-                          width: 60,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: '00'),
-                            controller: _rangeThreeController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: size * 0.95),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //range
+                          SizedBox(
+                            width: 60,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration: const InputDecoration(hintText: '00'),
+                              controller: _rangeThreeController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('X'),
-                        const SizedBox(height: 20),
-                        // rate
-                        SizedBox(
-                          width: 80,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            focusNode: rateThreeFocusNode,
-                            decoration: const InputDecoration(hintText: 'Rate'),
-                            controller: _rateThreeController,
-                            keyboardType: TextInputType.number,
-                            onSubmitted: (value) {
-                              double cost =
-                                  double.parse(value.isEmpty ? '0' : value) *
-                                      double.parse(
-                                          _rangeThreeController.text.isEmpty
-                                              ? '0'
-                                              : _rangeThreeController.text);
-                              setState(() {
-                                _costThreeController.text = cost.toString();
-                              });
-                              rateFourFocusNode.requestFocus();
-                            },
+                          const Spacer(flex: 1),
+
+                          const Text('X'),
+                          const Spacer(flex: 1),
+
+                          // rate
+                          SizedBox(
+                            width: 80,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              focusNode: rateThreeFocusNode,
+                              decoration:
+                                  const InputDecoration(hintText: 'Rate'),
+                              controller: _rateThreeController,
+                              keyboardType: TextInputType.number,
+                              onSubmitted: (value) {
+                                double cost =
+                                    double.parse(value.isEmpty ? '0' : value) *
+                                        double.parse(
+                                            _rangeThreeController.text.isEmpty
+                                                ? '0'
+                                                : _rangeThreeController.text);
+                                setState(() {
+                                  _costThreeController.text = cost.toString();
+                                });
+                                rateFourFocusNode.requestFocus();
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('='),
-                        const SizedBox(height: 20),
-                        // cost
-                        SizedBox(
-                          width: 150,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: 'Cost'),
-                            controller: _costThreeController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                          const Spacer(flex: 1),
+
+                          const Text('='),
+                          const Spacer(flex: 1),
+
+                          // cost
+                          SizedBox(
+                            width: 150,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  const InputDecoration(hintText: 'Cost'),
+                              controller: _costThreeController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10),
-
                     // for 300 - 400 -> 100
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //range
-                        SizedBox(
-                          width: 60,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: '00'),
-                            controller: _rangeFourController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: size * 0.95),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //range
+                          SizedBox(
+                            width: 60,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration: const InputDecoration(hintText: '00'),
+                              controller: _rangeFourController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('X'),
-                        const SizedBox(height: 20),
-                        // rate
-                        SizedBox(
-                          width: 80,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            focusNode: rateFourFocusNode,
-                            decoration: const InputDecoration(hintText: 'Rate'),
-                            controller: _rateFourController,
-                            keyboardType: TextInputType.number,
-                            onSubmitted: (value) {
-                              double cost =
-                                  double.parse(value.isEmpty ? '0' : value) *
-                                      double.parse(
-                                          _rangeFourController.text.isEmpty
-                                              ? '0'
-                                              : _rangeFourController.text);
-                              setState(() {
-                                _costFourController.text = cost.toString();
-                              });
-                              rateFiveFocusNode.requestFocus();
-                            },
+                          const Spacer(flex: 1),
+
+                          const Text('X'),
+                          const Spacer(flex: 1),
+
+                          // rate
+                          SizedBox(
+                            width: 80,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              focusNode: rateFourFocusNode,
+                              decoration:
+                                  const InputDecoration(hintText: 'Rate'),
+                              controller: _rateFourController,
+                              keyboardType: TextInputType.number,
+                              onSubmitted: (value) {
+                                double cost =
+                                    double.parse(value.isEmpty ? '0' : value) *
+                                        double.parse(
+                                            _rangeFourController.text.isEmpty
+                                                ? '0'
+                                                : _rangeFourController.text);
+                                setState(() {
+                                  _costFourController.text = cost.toString();
+                                });
+                                rateFiveFocusNode.requestFocus();
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('='),
-                        const SizedBox(height: 20),
-                        // cost
-                        SizedBox(
-                          width: 150,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: 'Cost'),
-                            controller: _costFourController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                          const Spacer(flex: 1),
+
+                          const Text('='),
+                          const Spacer(flex: 1),
+
+                          // cost
+                          SizedBox(
+                            width: 150,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  const InputDecoration(hintText: 'Cost'),
+                              controller: _costFourController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10),
-
                     // for 400 - 600 -> 200
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //range
-                        SizedBox(
-                          width: 60,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: '00'),
-                            controller: _rangeFiveController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: size * 0.95),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //range
+                          SizedBox(
+                            width: 60,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration: const InputDecoration(hintText: '00'),
+                              controller: _rangeFiveController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('X'),
-                        const SizedBox(height: 20),
-                        // rate
-                        SizedBox(
-                          width: 80,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            focusNode: rateFiveFocusNode,
-                            decoration: const InputDecoration(hintText: 'Rate'),
-                            controller: _rateFiveController,
-                            keyboardType: TextInputType.number,
-                            onSubmitted: (value) {
-                              double cost =
-                                  double.parse(value.isEmpty ? '0' : value) *
-                                      double.parse(
-                                          _rangeFiveController.text.isEmpty
-                                              ? '0'
-                                              : _rangeFiveController.text);
-                              setState(() {
-                                _costFiveController.text = cost.toString();
-                              });
-                              rateSixFocusNode.requestFocus();
-                            },
+                          const Spacer(flex: 1),
+
+                          const Text('X'),
+                          const Spacer(flex: 1),
+
+                          // rate
+                          SizedBox(
+                            width: 80,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              focusNode: rateFiveFocusNode,
+                              decoration:
+                                  const InputDecoration(hintText: 'Rate'),
+                              controller: _rateFiveController,
+                              keyboardType: TextInputType.number,
+                              onSubmitted: (value) {
+                                double cost =
+                                    double.parse(value.isEmpty ? '0' : value) *
+                                        double.parse(
+                                            _rangeFiveController.text.isEmpty
+                                                ? '0'
+                                                : _rangeFiveController.text);
+                                setState(() {
+                                  _costFiveController.text = cost.toString();
+                                });
+                                rateSixFocusNode.requestFocus();
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('='),
-                        const SizedBox(height: 20),
-                        // cost
-                        SizedBox(
-                          width: 150,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: 'Cost'),
-                            controller: _costFiveController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                          const Spacer(flex: 1),
+
+                          const Text('='),
+                          const Spacer(flex: 1),
+
+                          // cost
+                          SizedBox(
+                            width: 150,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  const InputDecoration(hintText: 'Cost'),
+                              controller: _costFiveController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10),
-
                     // for 600++
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //range
-                        SizedBox(
-                          width: 60,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: '00'),
-                            controller: _rangeSixController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: size * 0.95),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //range
+                          SizedBox(
+                            width: 60,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration: const InputDecoration(hintText: '00'),
+                              controller: _rangeSixController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('X'),
-                        const SizedBox(height: 20),
-                        // rate
-                        SizedBox(
-                          width: 80,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            focusNode: rateSixFocusNode,
-                            decoration: const InputDecoration(hintText: 'Rate'),
-                            controller: _rateSixController,
-                            keyboardType: TextInputType.number,
-                            onSubmitted: (value) {
-                              double cost =
-                                  double.parse(value.isEmpty ? '0' : value) *
-                                      double.parse(
-                                          _rangeSixController.text.isEmpty
-                                              ? '0'
-                                              : _rangeSixController.text);
-                              setState(() {
-                                _costSixController.text = cost.toString();
-                              });
-                              demandCountFocusNode.requestFocus();
-                            },
+                          const Spacer(flex: 1),
+
+                          const Text('X'),
+                          const Spacer(flex: 1),
+
+                          // rate
+                          SizedBox(
+                            width: 80,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              focusNode: rateSixFocusNode,
+                              decoration:
+                                  const InputDecoration(hintText: 'Rate'),
+                              controller: _rateSixController,
+                              keyboardType: TextInputType.number,
+                              onSubmitted: (value) {
+                                double cost =
+                                    double.parse(value.isEmpty ? '0' : value) *
+                                        double.parse(
+                                            _rangeSixController.text.isEmpty
+                                                ? '0'
+                                                : _rangeSixController.text);
+                                setState(() {
+                                  _costSixController.text = cost.toString();
+                                });
+                                demandCountFocusNode.requestFocus();
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('='),
-                        const SizedBox(height: 20),
-                        // cost
-                        SizedBox(
-                          width: 150,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(hintText: 'Cost'),
-                            controller: _costSixController,
-                            keyboardType: TextInputType.number,
-                            readOnly: true,
+                          const Spacer(flex: 1),
+
+                          const Text('='),
+                          const Spacer(flex: 1),
+
+                          // cost
+                          SizedBox(
+                            width: 150,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  const InputDecoration(hintText: 'Cost'),
+                              controller: _costSixController,
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 20),
-
                     //demand charge
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Demand Charge',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            //deman quantity
-                            SizedBox(
-                              width: size * 0.30,
-                              child: TextField(
-                                focusNode: demandCountFocusNode,
-                                style: const TextStyle(fontSize: 14),
-                                decoration:
-                                    const InputDecoration(hintText: 'Quantity'),
-                                controller: _demandCountController,
-                                keyboardType: TextInputType.number,
-                                onSubmitted: (value) =>
-                                    {demandAmountFocusNode.requestFocus()},
+                    Container(
+                      constraints: BoxConstraints(maxWidth: size * 0.95),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Demand Charge',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //deman quantity
+                              SizedBox(
+                                width: size * 0.30,
+                                child: TextField(
+                                  focusNode: demandCountFocusNode,
+                                  style: const TextStyle(fontSize: 14),
+                                  decoration: const InputDecoration(
+                                      hintText: 'Quantity'),
+                                  controller: _demandCountController,
+                                  keyboardType: TextInputType.number,
+                                  onSubmitted: (value) =>
+                                      {demandAmountFocusNode.requestFocus()},
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 20),
-                            Text('X'),
-                            const SizedBox(height: 20),
-                            //deman amount
-                            SizedBox(
-                              width: size * 0.55,
-                              child: TextField(
-                                focusNode: demandAmountFocusNode,
-                                style: const TextStyle(fontSize: 14),
-                                decoration:
-                                    const InputDecoration(hintText: 'Amount'),
-                                controller: _demandAmountController,
-                                keyboardType: TextInputType.number,
-                                onSubmitted: (value) =>
-                                    {taxFocusNode.requestFocus()},
+                              const SizedBox(height: 20),
+                              const Text('X'),
+                              const SizedBox(height: 20),
+                              //deman amount
+                              SizedBox(
+                                width: size * 0.55,
+                                child: TextField(
+                                  focusNode: demandAmountFocusNode,
+                                  style: const TextStyle(fontSize: 14),
+                                  decoration:
+                                      const InputDecoration(hintText: 'Amount'),
+                                  controller: _demandAmountController,
+                                  keyboardType: TextInputType.number,
+                                  onSubmitted: (value) =>
+                                      {taxFocusNode.requestFocus()},
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 20),
-
                     //tax rate
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Tax Rate',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          width: size * 0.85,
-                          child: TextField(
-                            focusNode: taxFocusNode,
-                            style: const TextStyle(fontSize: 14),
-                            decoration:
-                                const InputDecoration(hintText: 'Percentage'),
-                            controller: _taxController,
-                            keyboardType: TextInputType.number,
+                    Container(
+                      constraints: BoxConstraints(minWidth: size * 0.95),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Tax Rate',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            width: size * 0.95,
+                            child: TextField(
+                              focusNode: taxFocusNode,
+                              style: const TextStyle(fontSize: 14),
+                              decoration:
+                                  const InputDecoration(hintText: 'Percentage'),
+                              controller: _taxController,
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-
                     const SizedBox(height: 30),
                     //buttons
                     Row(
@@ -631,6 +683,72 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               try {
                                 // Parsing the values safely
+
+                                //first range calculation
+                                double cost = double.parse(
+                                        _rateOneController.text.isEmpty
+                                            ? '0'
+                                            : _rateOneController.text) *
+                                    double.parse(
+                                        _rangeOneController.text.isEmpty
+                                            ? '0'
+                                            : _rangeOneController.text);
+                                _costOneController.text = cost.toString();
+
+                                //second range calculation
+                                cost = double.parse(
+                                        _rateTwoController.text.isEmpty
+                                            ? '0'
+                                            : _rateTwoController.text) *
+                                    double.parse(
+                                        _rangeTwoController.text.isEmpty
+                                            ? '0'
+                                            : _rangeTwoController.text);
+                                _costTwoController.text = cost.toString();
+
+                                //third range calculation
+                                cost = double.parse(
+                                        _rateThreeController.text.isEmpty
+                                            ? '0'
+                                            : _rateThreeController.text) *
+                                    double.parse(
+                                        _rangeThreeController.text.isEmpty
+                                            ? '0'
+                                            : _rangeThreeController.text);
+                                _costThreeController.text = cost.toString();
+
+                                //four range calculation
+                                cost = double.parse(
+                                        _rateFourController.text.isEmpty
+                                            ? '0'
+                                            : _rateFourController.text) *
+                                    double.parse(
+                                        _rangeFourController.text.isEmpty
+                                            ? '0'
+                                            : _rangeFourController.text);
+                                _costFourController.text = cost.toString();
+
+                                //five range calculation
+                                cost = double.parse(
+                                        _rateFiveController.text.isEmpty
+                                            ? '0'
+                                            : _rateFiveController.text) *
+                                    double.parse(
+                                        _rangeFiveController.text.isEmpty
+                                            ? '0'
+                                            : _rangeFiveController.text);
+                                _costFiveController.text = cost.toString();
+
+                                //six range calculation
+                                cost = double.parse(
+                                        _rateSixController.text.isEmpty
+                                            ? '0'
+                                            : _rateSixController.text) *
+                                    double.parse(
+                                        _rangeSixController.text.isEmpty
+                                            ? '0'
+                                            : _rangeSixController.text);
+                                _costSixController.text = cost.toString();
 
                                 //costs
                                 double costOne = double.parse(
@@ -749,7 +867,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 30),
-
                     // total amount
                     const Text(
                       'Total Charge',
@@ -758,12 +875,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 10),
-                    TextField(
-                      decoration: const InputDecoration(hintText: 'Total'),
-                      controller: _totalController,
-                      readOnly: true,
+                    Container(
+                      constraints: BoxConstraints(minWidth: size * 0.95),
+                      child: TextField(
+                        decoration: const InputDecoration(hintText: 'Total'),
+                        controller: _totalController,
+                        readOnly: true,
+                      ),
                     ),
-
                     const SizedBox(height: 20),
                   ],
                 ),
