@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -155,11 +156,47 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 20),
                     //rate per unit
-                    const Text(
-                      'Range per Rate',
-                      textAlign: TextAlign.left,
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    Container(
+                      constraints: BoxConstraints(maxWidth: size * 0.95),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Range per Rate',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                          const Spacer(flex: 1),
+                          IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      // alert dialog
+                                      return AlertDialog(
+                                        title: const Text(
+                                            'Tarrif Rate Instructions',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600)),
+                                        content: TarrifRateDetails(size: size),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text('Close'))
+                                        ],
+                                      );
+                                    });
+                              },
+                              icon: const Icon(
+                                Icons.question_mark_rounded,
+                                color: Colors.blue,
+                              )),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10),
                     // per unit cost
@@ -682,8 +719,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               try {
-                                // Parsing the values safely
-
                                 //first range calculation
                                 double cost = double.parse(
                                         _rateOneController.text.isEmpty
@@ -889,6 +924,59 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TarrifRateDetails extends StatelessWidget {
+  const TarrifRateDetails({
+    super.key,
+    required this.size,
+  });
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: size * 0.55,
+      child: const SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            // Text(
+            //   'Electricity Tariff Rate',
+            //   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            // ),
+            Text(
+              'A. Low Tension (LT): 230/400 Volts\nElectricity Supply: Low tension AC single phase 230 volts and three phase 400 volts\nFrequency: 50 cycles/second\nApproved Load: Single phase 0-7.5 kW and three phase 0-80 kW.',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+              textAlign: TextAlign.start,
+            ),
+            SizedBox(height: 10),
+            Text('LT-A: Tariff for residential usage',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+            SizedBox(height: 10),
+            Text(
+              'First step: 00 to 75 units\nSecond step: 76 to 200 units\nThird step: 201 to 300 units\nFourth step: 301 to 400 units\nFifth step: 401 to 600 units\nSixth step: above 601 units',
+              style: TextStyle(fontSize: 12),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 15),
+            Text(
+              'For more details on the energy rate/charge (Taka/kWh) and demand rate/charge [Taka/kW/month], visit the link below.',
+              style: TextStyle(fontSize: 12),
+            ),
+            Tooltip(
+              message: 'Click on the link and copy it.',
+              child: SelectableText(
+                '\nhttps://dpdc.gov.bd/site/page/27e77af7-1187-436c-9f80-b579d3493a46/Tariff-Rate',
+                style: TextStyle(color: Colors.blue, fontSize: 12),
+              ),
+            ),
+          ],
         ),
       ),
     );
